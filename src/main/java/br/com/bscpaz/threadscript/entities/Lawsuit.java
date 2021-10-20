@@ -15,18 +15,18 @@ public class Lawsuit {
     public static final String TABLE_NAME = "tb_lawsuit";
 
     @Id
-	@Column(name = "id_lawsuit", unique = true, nullable = false)
-	private Integer idLawsuit;
+    @Column(name = "id_lawsuit", unique = true, nullable = false)
+    private Integer idLawsuit;
 
-	@Column(name = "num_lawsuit", nullable = false, length = 30)
-	private String numberLawsuit;
+    @Column(name = "num_lawsuit", nullable = false, length = 30)
+    private String numberLawsuit;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_plaintiff", nullable = false)
-	private Plaintiff plaintiff;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_plaintiff", nullable = false)
+    private Plaintiff plaintiff;
 
-	@Column(name = "in_active", nullable = false)
-	private Boolean isActive;
+    @Column(name = "in_active", nullable = false)
+    private Boolean isActive;
 
     public Integer getIdLawsuit() {
         return idLawsuit;
@@ -64,5 +64,4 @@ public class Lawsuit {
     public String toString() {
         return "idLawsuit = " + this.idLawsuit + " [" + this.numberLawsuit + "]";
     }
-
 }

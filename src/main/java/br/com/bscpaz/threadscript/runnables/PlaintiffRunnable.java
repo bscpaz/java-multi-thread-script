@@ -19,19 +19,19 @@ import br.com.bscpaz.threadscript.repositories.LawsuitRepository;
 @Scope("prototype")
 public class PlaintiffRunnable implements Runnable {
 
-	private CountDownLatch countDownLatch = null;
+    private CountDownLatch countDownLatch = null;
     private PlaintiffDto plaintiffDto = null;
 
     @Autowired
     private LawsuitRepository lawsuitRepository;
 
-	public void setCountDownLatch(CountDownLatch countDownLatch) {
-		this.countDownLatch = countDownLatch;
-	}
+    public void setCountDownLatch(CountDownLatch countDownLatch) {
+        this.countDownLatch = countDownLatch;
+    }
 	
-	public void setPlaintiffDto(PlaintiffDto plaintiffDto) {
-		this.plaintiffDto = plaintiffDto;
-	}
+    public void setPlaintiffDto(PlaintiffDto plaintiffDto) {
+        this.plaintiffDto = plaintiffDto;
+    }
 
     @Override
     public void run() {
@@ -58,5 +58,4 @@ public class PlaintiffRunnable implements Runnable {
             countDownLatch.countDown();
         }        
     }
-    
 }

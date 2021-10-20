@@ -8,7 +8,7 @@ import br.com.bscpaz.threadscript.entities.Plaintiff;
 public class PlaintiffDto {
 
     private Plaintiff plaintiff = null;
-	private boolean isSuccess = false;
+    private boolean isSuccess = false;
 
     public PlaintiffDto(Plaintiff plaintiff) {
         this.plaintiff = plaintiff;
@@ -29,5 +29,4 @@ public class PlaintiffDto {
     public static List<PlaintiffDto> convert(List<Plaintiff> plaintiffs) {
         return plaintiffs.stream().map(PlaintiffDto::new).collect(Collectors.toList());
     }
-
 }

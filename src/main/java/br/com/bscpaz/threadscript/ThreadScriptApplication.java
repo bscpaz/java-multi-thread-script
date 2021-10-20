@@ -37,7 +37,6 @@ public class ThreadScriptApplication {
 		SpringApplication.run(ThreadScriptApplication.class, args);
 	}
 
-
 	@PostConstruct
 	private void generateLawsuitScriptsByPlaintiff() {
 		List<Plaintiff> plaintiffs = plaintiffService.findAll();

@@ -18,15 +18,14 @@ public class Plaintiff {
     public static final String TABLE_NAME = "tb_plaintiff";
 
     @Id
-	@Column(name = "id_plaintiff", unique = true, nullable = false)
-	private Integer idPlaintiff;
+    @Column(name = "id_plaintiff", unique = true, nullable = false)
+    private Integer idPlaintiff;
 
-	@Column(name = "name", nullable = false, length = 30)
-	private String name;
+    @Column(name = "name", nullable = false, length = 30)
+    private String name;
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "plaintiff")
     List<Lawsuit> lawsuits = new ArrayList<>();
-
 
     public Integer getIdPlaintiff() {
         return idPlaintiff;
