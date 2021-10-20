@@ -1,4 +1,4 @@
-<h1 align="center">Multi-thread with a repository injection POC (proof of concept)</h1>
+<h2 align="center">Multi-thread with a repository injection POC (proof of concept)</h2>
 <p align="center">This is a POC of multi-thread process that uses a repositoy injection into a Runnable class that executes in a parallel approach.</p>
 
 
