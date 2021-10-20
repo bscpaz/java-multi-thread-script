@@ -25,52 +25,52 @@ import br.com.bscpaz.threadscript.services.PlaintiffService;
 @SpringBootApplication
 public class ThreadScriptApplication {
 
-	private boolean isAllProcessedSucessfully = true;
+    private boolean isAllProcessedSucessfully = true;
 
-	@Autowired
-	private ApplicationContext context;
+    @Autowired
+    private ApplicationContext context;
 
-	@Autowired
-	private PlaintiffService plaintiffService;
+    @Autowired
+    private PlaintiffService plaintiffService;
 
-	public static void main(String[] args) {
-		SpringApplication.run(ThreadScriptApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ThreadScriptApplication.class, args);
+    }
 
-	@PostConstruct
-	private void generateLawsuitScriptsByPlaintiff() {
-		List<Plaintiff> plaintiffs = plaintiffService.findAll();
-		List<PlaintiffDto> plaintiffsDtos = PlaintiffDto.convert(plaintiffs);
-		
-		System.out.println("Total found = " + plaintiffsDtos.size());
-		
-		CountDownLatch countDownLatch = new CountDownLatch(plaintiffsDtos.size());
-		ExecutorService executor = Executors.newFixedThreadPool(3);
+    @PostConstruct
+    private void generateLawsuitScriptsByPlaintiff() {
+        List<Plaintiff> plaintiffs = plaintiffService.findAll();
+        List<PlaintiffDto> plaintiffsDtos = PlaintiffDto.convert(plaintiffs);
+        
+        System.out.println("Total found = " + plaintiffsDtos.size());
+        
+        CountDownLatch countDownLatch = new CountDownLatch(plaintiffsDtos.size());
+        ExecutorService executor = Executors.newFixedThreadPool(3);
 
-		try {
-			for (PlaintiffDto plaintiffDto : plaintiffsDtos) {
-				PlaintiffRunnable runnable = context.getBean(PlaintiffRunnable.class);
-				runnable.setPlaintiffDto(plaintiffDto);
-				runnable.setCountDownLatch(countDownLatch);
-				executor.execute(runnable);
-			}
+        try {
+            for (PlaintiffDto plaintiffDto : plaintiffsDtos) {
+                PlaintiffRunnable runnable = context.getBean(PlaintiffRunnable.class);
+                runnable.setPlaintiffDto(plaintiffDto);
+                runnable.setCountDownLatch(countDownLatch);
+                executor.execute(runnable);
+            }
 
-			//Wait for all runnable has been completed.
-			countDownLatch.await();
+            //Wait for all runnable has been completed.
+            countDownLatch.await();
 
-			for (PlaintiffDto plaintiffDto : plaintiffsDtos) {
-				if (!plaintiffDto.isSuccess()) {
-					isAllProcessedSucessfully = false;
-				}
-			}
+            for (PlaintiffDto plaintiffDto : plaintiffsDtos) {
+                if (!plaintiffDto.isSuccess()) {
+                    isAllProcessedSucessfully = false;
+                }
+            }
 
-			System.out.println(String.format("\n\nAll scripts generated? [%s]\n\n", isAllProcessedSucessfully));
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (!executor.isShutdown()) {
-				executor.shutdown();
-			}
-		}
-	}
+            System.out.println(String.format("\n\nAll scripts generated? [%s]\n\n", isAllProcessedSucessfully));
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (!executor.isShutdown()) {
+                executor.shutdown();
+            }
+        }
+    }
 }
